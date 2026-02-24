@@ -18,8 +18,8 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore Dependencies
-        run: dotnet restore
+        run: dotnet restore ./wiredbrain.tests/WiredBrain.tests.csproj
 
       - id: build
         name: Build
-        run: dotnet build --no-restore
+        run: dotnet build ./wiredbrain.tests/WiredBrain.tests.csproj --no-restore
