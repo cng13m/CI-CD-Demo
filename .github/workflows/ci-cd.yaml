@@ -18,8 +18,20 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore Dependencies
-        run: dotnet restore ./wiredbrain.tests/WiredBrain.tests.csproj
+        run: |
+          PROJECT_FILE=$(find . -iname "WiredBrain.tests.csproj" -print -quit)
+          if [ -z "$PROJECT_FILE" ]; then
+            echo "WiredBrain.tests.csproj not found in repository"
+            exit 1
+          fi
+          dotnet restore "$PROJECT_FILE"
 
       - id: build
         name: Build
-        run: dotnet build ./wiredbrain.tests/WiredBrain.tests.csproj --no-restore
+        run: |
+          PROJECT_FILE=$(find . -iname "WiredBrain.tests.csproj" -print -quit)
+          if [ -z "$PROJECT_FILE" ]; then
+            echo "WiredBrain.tests.csproj not found in repository"
+            exit 1
+          fi
+          dotnet build "$PROJECT_FILE" --no-restore
